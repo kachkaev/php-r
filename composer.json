@@ -1,0 +1,25 @@
+{
+    "name": "kachkaev/php-r",
+    "type": "library",
+    "description": "Provides ability to run R scripts from PHP",
+    "keywords": ["r", "statistical analysis", "stats", "bridge"],
+    "homepage": "https://github.com/kachkaev/php-r",
+    "license": "MIT",
+    "authors": [{
+        "name": "Alexander Kachkaev",
+        "email": "alexander@kachkaev.ru",
+        "homepage": "http://en.kachkaev.ru/"
+    },
+    {
+        "name": "Contributors",
+        "homepage": "https://github.com/kachkaev/php-r/contributors"
+    }],
+    "require": {
+        "php": "~5.3"
+    },
+    "autoload": {
+        "psr-0": {
+            "Kachkaev\\PHPR\\": "src"
+        }
+    }
+}
