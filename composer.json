@@ -21,5 +21,9 @@
         "psr-0": {
             "Kachkaev\\PHPR\\": "src"
         }
-    }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
 }
