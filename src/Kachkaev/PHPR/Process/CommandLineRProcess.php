@@ -87,8 +87,7 @@ class CommandLineRProcess extends AbstractRProcess
 
                     // A multi-line command that does not finish is a fatal case
                     if ($rInputLine === end($rInputLines)) {
-                        throw new RProcessException(
-                                'The last command in the R input is not complete (missing closing bracket, quotation mark, etc.)');
+                        throw new IncompleteRCommandException($currentCommandInput);
                     }
                     break;
                 }
