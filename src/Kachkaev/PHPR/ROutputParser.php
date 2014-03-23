@@ -8,7 +8,7 @@ namespace Kachkaev\PHPR;
  * @author  "Alexander Kachkaev <alexander@kachkaev.ru>"
  *
  */
-class ROutputInterpreter
+class ROutputParser
 {
     /**
      * "[1] 42"
