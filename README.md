@@ -1,4 +1,5 @@
-# php-r [![Build Status](https://travis-ci.org/kachkaev/php-r.png?branch=master)](https://travis-ci.org/kachkaev/php-r)
+php-r [![Build Status](https://travis-ci.org/kachkaev/php-r.png?branch=master)](https://travis-ci.org/kachkaev/php-r)
+=====
 
 PHPR (or php-r) is a library that provides ability to run R scripts from PHP. Available [as a bundle](https://github.com/kachkaev/KachkaevPHPRBundle) for Symfony2 users.
 
@@ -7,7 +8,8 @@ Integration with server-based implementation of R can be easily implemented on d
 
 It is possible to both run all R code in one batch and interactively exchange commands with R interpreter.
 
-## Usage
+Usage
+-----
 ### Option 1: all R code in one batch
 ```
 use Kachkaev\PHPR\RCore;
@@ -100,7 +102,7 @@ $rProcess->write('x = 1 + (');
 ```
 
 #### Separate access to input / output / errors for each R command
-To avoid parsing a mix of R input, output and errors, the result of script execution can be accessed separately:
+To avoid manual splitting of a mix of R input, output and errors, the result of script execution can be accessed separately:
 ```
 $rProcess = $r->createInteractiveProcess();
 
@@ -200,23 +202,23 @@ if (count ($allErrors) > 1) {
 }
 ```
 
-#### Interpreting R output 
+#### Parsing R output 
 
-To ease the interpretation of R output, ```ROutputInterpreter``` can be used:
+To ease parsing of R output, ```ROutputParser``` can be used:
 
 ```
-use Kachkaev\PHPR\ROutputInterpreter;
+use Kachkaev\PHPR\ROutputParser;
 
-$rOutputInterpreter = new ROutputInterpreter();
+$rOutputParser = new ROutputParser();
 $rProcess->write('21 + 21');
 var_dump($rProcess->getLastWriteOutput());
 // string(6) "[1] 42"
-var_dump($rOutputInterpreter->singleNumber($rProcess->getLastWriteOutput()));
+var_dump($rOutputParser->singleNumber($rProcess->getLastWriteOutput()));
 // int(42)
 ```
 
 See PHPdoc annotations to classes for more details.
 
-## License
-
+License
+-------
 MIT. See [LICENSE](LICENSE).
