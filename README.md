@@ -7,8 +7,8 @@ Integration with server-based implementation of R can be easily implemented on d
 
 It is possible to both run all R code in one batch and interactively exchange commands with R interpreter.
 
-# Usage
-## Option 1: all R code in one batch
+## Usage
+### Option 1: all R code in one batch
 ```
 use Kachkaev\PHPR\RCore;
 use Kachkaev\PHPR\Engine\CommandLineREngine;
@@ -55,7 +55,7 @@ PHP output:
 Error: object 'x' not found
 ```
 
-## Option 2: interactive exchange of data
+### Option 2: interactive exchange of data
 To exchange commands with a single R process interactively, another approach should be used:
 ```
 use Kachkaev\PHPR\RCore;
@@ -99,7 +99,7 @@ $rProcess->write('x = 1 + (');
 // IncompleteRCommandException
 ```
 
-### Separate access to input / output / errors for each R command
+#### Separate access to input / output / errors for each R command
 To avoid parsing a mix of R input, output and errors, the result of script execution can be accessed separately:
 ```
 $rProcess = $r->createInteractiveProcess();
@@ -171,7 +171,7 @@ $resultAsArray = $rProcess->getAllResult(true);
 // ]
 ```
 
-### Sensitivity to R errors
+#### Sensitivity to R errors
 If it is necessary to make sure that a sequence of R commands is running with no errors, and calling ```hasLastWriteErrors()``` after each ```write()``` is unreasonable, the process can be made sensible to errors.
 ```RErrorsException``` will be thrown on ```write()```:
 
@@ -200,7 +200,7 @@ if (count ($allErrors) > 1) {
 }
 ```
 
-### Interpreting R output 
+#### Interpreting R output 
 
 To ease the interpretation of R output, ```ROutputInterpreter``` can be used:
 
@@ -217,6 +217,6 @@ var_dump($rOutputInterpreter->singleNumber($rProcess->getLastWriteOutput()));
 
 See PHPdoc annotations to classes for more details.
 
-# License
+## License
 
 MIT. See [LICENSE](LICENSE).
