@@ -1,5 +1,5 @@
 <?php
-namespace Kachkaev\PHPR\REngine;
+namespace Kachkaev\PHPR\Engine;
 
 use Kachkaev\PHPR\RProcess\RProcessInterface;
 

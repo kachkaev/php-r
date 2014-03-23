@@ -1,8 +1,8 @@
 <?php
-namespace Kachkaev\PHPR\RProcess;
+namespace Kachkaev\PHPR\Process;
 
-use Kachkaev\PHPR\RException\RErrorsException;
-use Kachkaev\PHPR\RException\RProcessException;
+use Kachkaev\PHPR\Exception\RErrorsException;
+use Kachkaev\PHPR\Exception\RProcessException;
 
 abstract class AbstractRProcess implements RProcessInterface
 {

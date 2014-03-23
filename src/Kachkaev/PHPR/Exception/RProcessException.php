@@ -1,5 +1,5 @@
 <?php
-namespace Kachkaev\PHPR\RException;
+namespace Kachkaev\PHPR\Exception;
 
 /**
  * To be thrown by an instance of RProcess when a critical

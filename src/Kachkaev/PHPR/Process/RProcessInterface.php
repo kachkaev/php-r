@@ -1,8 +1,8 @@
 <?php
-namespace Kachkaev\PHPR\RProcess;
+namespace Kachkaev\PHPR\Process;
 
-use Kachkaev\PHPR\RException\RProcessException;
-use Kachkaev\PHPR\RException\RErrorException;
+use Kachkaev\PHPR\Exception\RProcessException;
+use Kachkaev\PHPR\Exception\RErrorException;
 
 /**
  * RProcessInterface is used in wrappers for a synchronous R interpreter process

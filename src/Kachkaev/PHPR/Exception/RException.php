@@ -1,5 +1,5 @@
 <?php
-namespace Kachkaev\PHPR\RException;
+namespace Kachkaev\PHPR\Exception;
 
 /**
  * Generalised R-related exception

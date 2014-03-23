@@ -1,5 +1,5 @@
 <?php
-namespace Kachkaev\PHPR\RException;
+namespace Kachkaev\PHPR\Exception;
 
 use Kachkaev\PHPR\RError;
 
