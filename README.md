@@ -141,11 +141,11 @@ echo $errors[0]->getErrorMessage()
 echo $errors[0]->getCommand()
 // x + xxx
 
-echo $rProcess->getAllInput();
-echo $rProcess->getAllOutput();
-echo $rProcess->hasErrors();
-echo $rProcess->getErrorCount();
-echo $rProcess->getErrors();
+$rProcess->getAllInput();
+$rProcess->getAllOutput();
+$rProcess->hasErrors();
+$rProcess->getErrorCount();
+$rProcess->getErrors();
 ```
 
 Passing ```true``` to ```getXXXInput/getXXXOutput/getXXXResult``` splits strings into arrays, where each element corresponds to a single command:
@@ -159,11 +159,11 @@ y
 x
 EOF;
     );
-$inputAsArray = $rProcess->getLastWriteInput(true);
+$inputAsArray = $rProcess->getAllInput(true);
 // ['x = {newline} 1 + 1', 'y', 'x']
-$outputAsArray = $rProcess->getLastWriteOutput(true);
+$outputAsArray = $rProcess->getAllOutput(true);
 // ['', null, '2']
-$resultAsArray = $rProcess->getLastWriteResult(true);
+$resultAsArray = $rProcess->getAllResult(true);
 // [
 //   ['x = {newline} 1 + 1', '', null],
 //   ['y', null, 'Error: object \'y\' not found'],
@@ -172,7 +172,7 @@ $resultAsArray = $rProcess->getLastWriteResult(true);
 ```
 
 ### Sensitivity to R errors
-If it is necessary to make sure that a sequence of R commands is running with no errors, the process can be made sensible to them.
+If it is necessary to make sure that a sequence of R commands is running with no errors, and calling ```hasLastWriteErrors()``` after each ```write()``` is unreasonable, the process can be made sensible to errors.
 ```RErrorsException``` will be thrown on ```write()```:
 
 ```
@@ -190,7 +190,7 @@ if ($rProcess->hasLastWriteErrors()) {
 }
 ```
 
-R-related errors and the exception thrown are not critical; the same instance of R process can be still used after they occur. If last input contains multiple commands, and several of them cause errors, ```RErrorsException``` will have the complete list:
+R-related errors and the exception thrown are not critical; the same instance of R process can be still used after they occur. If last input contains multiple commands, and several of them cause errors, ```RErrorsException``` will have the complete list. In any case all command passed to ```write()``` will be attempted by R interpreter.
 
 ```
 $allErrors = $rErrorsException->getErrors();
