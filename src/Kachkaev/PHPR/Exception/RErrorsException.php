@@ -27,9 +27,9 @@ class RErrorsException extends RException
         }
 
         foreach ($outputLog as $outputLogElement) {
-            if (!is_string($outputLogElement)) {
+            if (!is_null($outputLogElement) && !is_string($outputLogElement)) {
                 throw new \InvalidArgumentException(
-                        'Argument $outputLog in constructor of RErrorsException must be an array of strings');
+                        'Argument $outputLog in constructor of RErrorsException must be an array of strings or nulls');
             }
         }
         if (!count($errors)) {

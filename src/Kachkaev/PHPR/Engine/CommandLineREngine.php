@@ -1,7 +1,7 @@
 <?php
 namespace Kachkaev\PHPR\Engine;
 
-use Kachkaev\PHPR\RProcess\CommandLineRProcess;
+use Kachkaev\PHPR\Process\CommandLineRProcess;
 
 class CommandLineREngine extends AbstractREngine
 {

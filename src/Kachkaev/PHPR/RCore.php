@@ -8,7 +8,7 @@ class RCore
 {
     private $rEngine;
     
-    public function __construct(PhpREngineInterface $rEngine)
+    public function __construct(REngineInterface $rEngine)
     {
         $this->rEngine = $rEngine;
     }
