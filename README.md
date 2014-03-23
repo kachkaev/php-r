@@ -80,7 +80,7 @@ PHP output:
 
 The process is synchronous, i.e. if R code sent to ```write()``` implies some complex computations, PHP will wait until they are finished.
  
-Multiple R commands can be written in one ```write()```, they can be multi-line too:
+Multiple commands can be passed to R inside one ```write()```, they can be multi-line too:
 
 ```
 $rProcess->write(<<<EOF
