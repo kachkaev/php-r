@@ -1,4 +1,4 @@
-php-r [![Build Status](https://travis-ci.org/kachkaev/php-r.png?branch=master)](https://travis-ci.org/kachkaev/php-r)
+php-r
 =====
 
 PHPR (or php-r) is a library that provides ability to run R scripts from PHP. Available [as a bundle](https://github.com/kachkaev/KachkaevPHPRBundle) for Symfony2 users.
