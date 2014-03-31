@@ -150,7 +150,7 @@ $rProcess->getErrorCount();
 $rProcess->getErrors();
 ```
 
-Passing ```true``` to ```getXXXInput/getXXXOutput/getXXXResult``` splits strings into arrays, where each element corresponds to a single command:
+Passing ```true``` to ```get(LastWrite|All)Input/get(LastWrite|All)Output/get(LastWrite|All)Result``` splits strings into arrays, where each element corresponds to a single command:
 
 ```php
 $rProcess = $r->createInteractiveProcess();
@@ -192,7 +192,7 @@ if ($rProcess->hasLastWriteErrors()) {
 }
 ```
 
-R-related errors and the exception thrown are not critical; the same instance of R process can be still used after they occur. If last input contains multiple commands, and several of them cause errors, ```RErrorsException``` will have the complete list. In any case all command passed to ```write()``` will be attempted by R interpreter.
+R-related errors and the exception thrown are not critical; the same instance of R process can be still used after they occur. If last input contains multiple commands, and several of them cause errors, ```RErrorsException``` will have the complete list. In any case all commands passed to ```write()``` will be attempted by R interpreter.
 
 ```php
 $allErrors = $rErrorsException->getErrors();
