@@ -1,7 +1,7 @@
 php-r
 =====
 
-PHPR (or php-r) is a library that provides ability to run R scripts from PHP. Available [as a bundle](https://github.com/kachkaev/KachkaevPHPRBundle) for Symfony2 users.
+PHPR (or php-r) is a library that provides ability to run R scripts from PHP. Available [as a bundle](https://github.com/kachkaev/KachkaevPHPRBundle) for Symfony2 users. Composer package: [kachkaev/php-r](https://packagist.org/packages/kachkaev/php-r).
 
 The idea is based on invoking a command-line version of R and exchanging messages with this external process.
 Integration with server-based implementation of R can be easily implemented on demand as the library architecture supports that.
