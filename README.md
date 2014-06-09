@@ -23,7 +23,7 @@ y = 2
 x + y
 x + z
 x - y
-EOF;
+EOF
     );
 
 echo $result;
@@ -65,7 +65,7 @@ use Kachkaev\PHPR\Engine\CommandLineREngine;
 
 $r = new RCore(new CommandLineREngine('/usr/bin/R'));
 $rProcess = $r->createInteractiveProcess();
-
+$rProcess->start();
 $rProcess->write('x = 100');
 // Do something else
 $rProcess->write('x * x');
@@ -90,7 +90,7 @@ x = 1
 y = 10 + (x 
 + x / 2)
 z = 42
-EOF;
+EOF
     );
 ```
 
@@ -105,20 +105,20 @@ $rProcess->write('x = 1 + (');
 To avoid manual splitting of a mix of R input, output and errors, the result of script execution can be accessed separately:
 ```php
 $rProcess = $r->createInteractiveProcess();
-
+$rProcess->start();
 $rProcess->write(<<<EOF
 x = 1
 y = 2
 x
 y
-EOF;
+EOF
     );
     
 $rProcess->write(<<<EOF
 x + 41
 x + xxx
 x + y
-EOF;
+EOF
     );
     
 echo $rProcess->getLastWriteInput();
@@ -154,12 +154,13 @@ Passing ```true``` to ```get(LastWrite|All)Input/get(LastWrite|All)Output/get(La
 
 ```php
 $rProcess = $r->createInteractiveProcess();
+$rProcess->start();
 $rProcess->write(<<<EOF
 x = 
 1 + 1
 y
 x
-EOF;
+EOF
     );
 $inputAsArray = $rProcess->getAllInput(true);
 // ['x ={newline}1 + 1', 'y', 'x']
