@@ -19,10 +19,37 @@ class ROutputParser
      * 
      * @return numeric
      */
-    public function singleNumber($output) {
-        //TODO check if r output is a valid number
-        return (float) substr($output, 4);
+    public function singleNumber($output)
+    {
+        //TODO properly check if r output is a valid number
+        return 0 + substr($output, 4);
     }
     
-    //TODO implement more common cases
+    /**
+     * " [1]   100  200  300 ... 1200"
+     * "[13]  1300 1400 1500 ..."
+     *  ↓
+     *  [100, 200, 300 ...]
+     * 
+     * @param string $output
+     * 
+     * @return array
+     */
+    public function numericVector($output)
+    {
+        //TODO properly check if r output is a valid vector
+        $result = array();
+        
+        foreach (explode("\n", $output) as $row) {
+            // Cut off [?] splitNumbers 
+            $numbersAsStr = substr($row, strpos($row, ']') + 1);
+            foreach (explode(' ', $numbersAsStr) as $potentialNumber) {
+                if ($potentialNumber !== '') {
+                    array_push($result, 0 + $potentialNumber);
+                }
+            }
+        }
+        
+        return $result;
+    }
 }
