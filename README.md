@@ -15,7 +15,7 @@ Usage
 use Kachkaev\PHPR\RCore;
 use Kachkaev\PHPR\Engine\CommandLineREngine;
 
-$r = new RCore(new CommandLineREngine('/usr/bin/R'));
+$r = new RCore(new CommandLineREngine('/path/to/R'));
 
 $result = $r->run(<<<EOF
 x = 1
@@ -63,7 +63,7 @@ To exchange commands with a single R process interactively, another approach sho
 use Kachkaev\PHPR\RCore;
 use Kachkaev\PHPR\Engine\CommandLineREngine;
 
-$r = new RCore(new CommandLineREngine('/usr/bin/R'));
+$r = new RCore(new CommandLineREngine('/path/to/R'));
 $rProcess = $r->createInteractiveProcess();
 $rProcess->start();
 $rProcess->write('x = 100');
