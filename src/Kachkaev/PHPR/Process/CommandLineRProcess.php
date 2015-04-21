@@ -25,8 +25,10 @@ class CommandLineRProcess extends AbstractRProcess
                 2 => array("pipe", "w"),);
 
         $this->process = proc_open(
-                sprintf("'%s' --silent --vanilla", $this->rCommand),
-                $descriptors, $this->pipes);
+		sprintf("\"%s\" --silent --vanilla", $this->rCommand),
+		$descriptors, 
+		$this->pipes
+	);
 
         if (!is_resource($this->process)) {
             throw new RProcessException('Could not create the process');
