@@ -9,9 +9,9 @@ use Kachkaev\PHPR\Process\AbstractRProcess;
 abstract class AbstractCommandLineRProcess extends AbstractRProcess
 {
     protected $pipes;
-	protected $errorPipe;
+    protected $errorPipe;
 	
-	private $rCommand;
+    private $rCommand;
     private $process;
 
     private $sleepTimeBetweenReads = 1;
@@ -20,13 +20,13 @@ abstract class AbstractCommandLineRProcess extends AbstractRProcess
     public function __construct($rCommand)
     {
         $this->rCommand = $rCommand;
-		$this->setErrorPipe();
+        $this->setErrorPipe();
     }
 
 	public function doStart()
     {
         $descriptors = array(
-		    0 => array("pipe", "r"), 
+            0 => array("pipe", "r"), 
             1 => array("pipe", "w"),
             2 => $this->getErrorChannel()
         );

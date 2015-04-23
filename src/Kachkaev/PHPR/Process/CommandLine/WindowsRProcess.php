@@ -4,7 +4,7 @@ namespace Kachkaev\PHPR\Process\CommandLine;
 
 class WindowsRProcess extends AbstractCommandLineRProcess
 {
-	private $errorFile;
+    private $errorFile;
 
     public function __construct($rCommand, $errorFile)
     {
