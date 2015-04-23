@@ -4,7 +4,7 @@ namespace Kachkaev\PHPR\Process\CommandLine;
 
 class NonWindowsRProcess extends AbstractCommandLineRProcess
 {
-       protected function setErrorPipe()
+    protected function setErrorPipe()
     {
         $this->errorPipe = true;
     }

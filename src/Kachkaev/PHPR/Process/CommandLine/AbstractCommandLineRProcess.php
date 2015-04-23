@@ -10,7 +10,7 @@ abstract class AbstractCommandLineRProcess extends AbstractRProcess
 {
     protected $pipes;
     protected $errorPipe;
-	
+    
     private $rCommand;
     private $process;
 
@@ -23,7 +23,7 @@ abstract class AbstractCommandLineRProcess extends AbstractRProcess
         $this->setErrorPipe();
     }
 
-	public function doStart()
+    protected function doStart()
     {
         $descriptors = array(
             0 => array("pipe", "r"), 
@@ -56,7 +56,7 @@ abstract class AbstractCommandLineRProcess extends AbstractRProcess
         } while ($out != '> ');
     }
     
-    public function doStop()
+    protected function doStop()
     {
         fclose($this->pipes[0]);
         fclose($this->pipes[1]);
@@ -68,7 +68,7 @@ abstract class AbstractCommandLineRProcess extends AbstractRProcess
         proc_close($this->process);
     }
     
-    function doWrite(array $rInputLines)
+    protected function doWrite(array $rInputLines)
     {
         $currentCommandInput = '';
         $currentCommandOutput = '';
