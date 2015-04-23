@@ -15,7 +15,7 @@ class RCore
     
     public function run($rCode, $resultAsArray = false, $isErrorSensitive = false)
     {
-        return $this->rEngine->run($rCode, $resultAsArray);
+        return $this->rEngine->run($rCode, $resultAsArray, $isErrorSensitive);
     }
     
     public function createInteractiveProcess($isErrorSensitive = false)
