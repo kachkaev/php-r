@@ -53,7 +53,8 @@ abstract class AbstractCommandLineRProcess extends AbstractRProcess
         do {
             $out = fread($this->pipes[1], $this->infiniteLength);
             usleep($this->sleepTimeBetweenReads);
-        } while ($out != '> ');
+        } while ($out != '> '
+                && substr($out, -3) != "\n> ");
     }
     
     function doStop()
@@ -109,7 +110,7 @@ abstract class AbstractCommandLineRProcess extends AbstractRProcess
                 }
 
                 usleep($this->sleepTimeBetweenReads);
-            } while ($currentCommandOutput !== '> '
+            } while ($currentCommandOutput != '> '
                     && substr($currentCommandOutput, -3) != "\n> ");
 
             // Continue reading input if it is a multi-line command
