@@ -41,8 +41,12 @@ class ROutputParser
         $result = array();
         
         foreach (explode("\n", $output) as $row) {
-            // Cut off [?] splitNumbers 
-            $numbersAsStr = substr($row, strpos($row, ']') + 1);
+            // Cut off [?] if needed
+            If (strpos($row, ']') !== false) {
+                $numbersAsStr = substr($row, strpos($row, ']') + 1); 
+            } else {
+                $numbersAsStr = $row;
+            }
             foreach (explode(' ', $numbersAsStr) as $potentialNumber) {
                 if ($potentialNumber !== '') {
                     array_push($result, 0 + $potentialNumber);
