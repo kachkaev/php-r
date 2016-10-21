@@ -15,10 +15,10 @@
         "homepage": "https://github.com/kachkaev/php-r/contributors"
     }],
     "require": {
-        "php": "~5.3"
+        "php": ">=5.3.9"
     },
     "autoload": {
-        "psr-0": {
+        "psr-4": {
             "Kachkaev\\PHPR\\": "src"
         }
     },
