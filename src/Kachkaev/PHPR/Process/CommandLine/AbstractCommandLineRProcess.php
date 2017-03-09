@@ -1,15 +1,18 @@
 <?php
-namespace Kachkaev\PHPR\Process;
+
+namespace Kachkaev\PHPR\Process\CommandLine;
 
 use Kachkaev\PHPR\RError;
 use Kachkaev\PHPR\Exception\RProcessException;
+use Kachkaev\PHPR\Process\AbstractRProcess;
 
-class CommandLineRProcess extends AbstractRProcess
+abstract class AbstractCommandLineRProcess extends AbstractRProcess
 {
+    protected $pipes;
+    protected $errorPipe;
+    
     private $rCommand;
     private $process;
-
-    private $pipes;
 
     private $sleepTimeBetweenReads = 1;
     private $infiniteLength = 100500;
@@ -17,30 +20,32 @@ class CommandLineRProcess extends AbstractRProcess
     public function __construct($rCommand)
     {
         $this->rCommand = $rCommand;
+        $this->setErrorPipe();
     }
 
     function doStart()
     {
-        $descriptors = array(0 => array("pipe", "r"), 1 => array("pipe", "w"),
-                2 => array("pipe", "w"),);
+        $descriptors = array(
+            0 => array("pipe", "r"), 
+            1 => array("pipe", "w"),
+            2 => $this->getErrorChannel()
+        );
 
         $this->process = proc_open(
-		sprintf("\"%s\" --silent --vanilla", $this->rCommand),
-		$descriptors, 
-		$this->pipes
-	);
+            sprintf("\"%s\" --silent --vanilla", $this->rCommand),
+            $descriptors, 
+            $this->pipes
+        );
 
         if (!is_resource($this->process)) {
             throw new RProcessException('Could not create the process');
         }
 
-        stream_set_blocking($this->pipes[2], false);
-
-        $errorOutput = fgets($this->pipes[2]);
+        $errorOutput = $this->getLastError();
         if ($errorOutput) {
             throw new RProcessException($errorOutput);
         }
-
+       
         // Do not terminate on errors
         fwrite($this->pipes[0], "options(error=expression(NULL))\n");
 
@@ -51,15 +56,19 @@ class CommandLineRProcess extends AbstractRProcess
         } while ($out != '> '
                 && substr($out, -3) != "\n> ");
     }
-
+    
     function doStop()
     {
         fclose($this->pipes[0]);
         fclose($this->pipes[1]);
-        fclose($this->pipes[2]);
+        
+        if ($this->errorPipe === true) {
+            fclose($this->pipes[2]);
+        }
+        
         proc_close($this->process);
     }
-
+    
     function doWrite(array $rInputLines)
     {
         $currentCommandInput = '';
@@ -73,16 +82,21 @@ class CommandLineRProcess extends AbstractRProcess
             fwrite($this->pipes[0], $rInputLine . "\n");
 
             // Read back the input
-            $currentCommandInput .= fread($this->pipes[1],
-                    $this->infiniteLength);
+            $currentCommandInput .= fread(
+                $this->pipes[1],
+                $this->infiniteLength
+            );
+            
             $commandIsIncomplete = false;
             do {
                 // Append the output
-                $currentCommandOutput .= fread($this->pipes[1],
-                        $this->infiniteLength);
-                $currentCommandErrorOutput .= fread($this->pipes[2],
-                        $this->infiniteLength);
-
+                $currentCommandOutput .= fread(
+                    $this->pipes[1], 
+                    $this->infiniteLength
+                );
+                
+                $currentCommandErrorOutput .= $this->getCurrentCommandErrorOutput();
+                
                 // If the output is "+ ", then it is a multi-line command
                 if ($currentCommandOutput === '+ ') {
                     $commandIsIncomplete = true;
@@ -111,9 +125,10 @@ class CommandLineRProcess extends AbstractRProcess
             if ($currentCommandOutput === false) {
                 $currentCommandOutput = null;
             }
-            // Trim "\n" from the error input
-            $currentCommandErrorOutput = substr($currentCommandErrorOutput, 0,
-                    -1);
+            // Trim "\n" from the error input if needed
+            if (strstr($currentCommandErrorOutput, '\n')) {
+                $currentCommandErrorOutput = substr($currentCommandErrorOutput, 0, -1);
+            }
 
             // Add input and output to logs
             $this->inputLog[] = $currentCommandInput;
@@ -122,8 +137,12 @@ class CommandLineRProcess extends AbstractRProcess
 
             // Register an error if needed
             if ($currentCommandErrorOutput) {
-                $error = new RError($this->inputLineCount - 1, count($this->inputLog) - 1,
-                        $currentCommandInput, $currentCommandErrorOutput);
+                $error = new RError(
+                    $this->inputLineCount - 1, 
+                    count($this->inputLog) - 1,
+                    $currentCommandInput, 
+                    $currentCommandErrorOutput
+                );
                 ++$this->lastWriteErrorCount;
                 $this->errors[] = $error;
             }
@@ -134,4 +153,12 @@ class CommandLineRProcess extends AbstractRProcess
             $currentCommandErrorOutput = '';
         }
     }
+    
+    abstract protected function setErrorPipe();
+    
+    abstract protected function getErrorChannel();
+    
+    abstract protected function getLastError();
+    
+    abstract protected function getCurrentCommandErrorOutput();
 }
