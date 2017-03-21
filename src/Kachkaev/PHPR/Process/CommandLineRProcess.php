@@ -3,6 +3,7 @@ namespace Kachkaev\PHPR\Process;
 
 use Kachkaev\PHPR\RError;
 use Kachkaev\PHPR\Exception\RProcessException;
+use Kachkaev\PHPR\Exception\IncompleteRCommandException;
 
 class CommandLineRProcess extends AbstractRProcess
 {
