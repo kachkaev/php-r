@@ -55,9 +55,7 @@ class CommandLineRProcess extends AbstractRProcess
 
     function doStop()
     {
-        fclose($this->pipes[0]);
-        fclose($this->pipes[1]);
-        fclose($this->pipes[2]);
+        for($i=0;$i<3;$i++) fclose($this->pipes[$i]);
         proc_close($this->process);
     }
 
