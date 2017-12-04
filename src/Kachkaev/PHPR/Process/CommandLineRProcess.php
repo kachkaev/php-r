@@ -70,22 +70,25 @@ class CommandLineRProcess extends AbstractRProcess
         foreach ($rInputLines as $rInputLine) {
             ++$this->inputLineCount;
 
+            if (empty(trim($rInputLine))) {
+                continue;
+            }
+
             // Write the input into the pipe
             fwrite($this->pipes[0], $rInputLine . "\n");
 
             // Read back the input
-            $currentCommandInput .= fread($this->pipes[1],
-                    $this->infiniteLength);
+            $currentCommandInput .= fread($this->pipes[1], $this->infiniteLength);
             $commandIsIncomplete = false;
             do {
+                $output = fread($this->pipes[1], $this->infiniteLength);
+
                 // Append the output
-                $currentCommandOutput .= fread($this->pipes[1],
-                        $this->infiniteLength);
-                $currentCommandErrorOutput .= fread($this->pipes[2],
-                        $this->infiniteLength);
+                $currentCommandOutput .= $output;
+                $currentCommandErrorOutput .= fread($this->pipes[2], $this->infiniteLength);
 
                 // If the output is "+ ", then it is a multi-line command
-                if ($currentCommandOutput === '+ ') {
+                if (substr($output, -3) === "\n+ " || $output === '+ ') {
                     $commandIsIncomplete = true;
                     $currentCommandOutput = '';
 
@@ -97,8 +100,7 @@ class CommandLineRProcess extends AbstractRProcess
                 }
 
                 usleep($this->sleepTimeBetweenReads);
-            } while ($currentCommandOutput != '> '
-                    && substr($currentCommandOutput, -3) != "\n> ");
+            } while ($output !== '> ' && substr($output, -3) !== "\n> ");
 
             // Continue reading input if it is a multi-line command
             if ($commandIsIncomplete) {
@@ -113,8 +115,7 @@ class CommandLineRProcess extends AbstractRProcess
                 $currentCommandOutput = null;
             }
             // Trim "\n" from the error input
-            $currentCommandErrorOutput = substr($currentCommandErrorOutput, 0,
-                    -1);
+            $currentCommandErrorOutput = substr($currentCommandErrorOutput, 0, -1);
 
             // Add input and output to logs
             $this->inputLog[] = $currentCommandInput;
