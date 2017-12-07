@@ -42,15 +42,15 @@ class CommandLineRProcess extends AbstractRProcess
             throw new RProcessException($errorOutput);
         }
 
-        // Do not terminate on errors
-        fwrite($this->pipes[0], "options(error=expression(NULL))\n");
-
         // Skip the startup message (if any)
         do {
             $out = fread($this->pipes[1], $this->infiniteLength);
             usleep($this->sleepTimeBetweenReads);
-        } while ($out != '> '
-                && substr($out, -3) != "\n> ");
+        } while ($out !== '> ' && substr($out, -3) !== "\n> ");
+
+        // Do not terminate on errors
+        fwrite($this->pipes[0], "options(error=expression(NULL))\n");
+        fread($this->pipes[1], $this->infiniteLength);
     }
 
     function doStop()
