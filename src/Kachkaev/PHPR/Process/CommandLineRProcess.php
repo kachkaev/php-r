@@ -78,7 +78,12 @@ class CommandLineRProcess extends AbstractRProcess
             fwrite($this->pipes[0], $rInputLine . "\n");
 
             // Read back the input
-            $currentCommandInput .= fread($this->pipes[1], $this->infiniteLength);
+            do {
+                $readLine = fread($this->pipes[1], $this->infiniteLength);
+            } while (trim($readLine) !== trim($rInputLine));
+            $currentCommandInput .= $readLine;
+
+            // Read the output
             $commandIsIncomplete = false;
             do {
                 $output = fread($this->pipes[1], $this->infiniteLength);
