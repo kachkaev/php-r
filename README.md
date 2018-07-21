@@ -1,8 +1,6 @@
 php-r
 =====
 
-[![Donate](https://img.shields.io/badge/donate-paypal-blue.svg?style=flat-rounded)](https://paypal.me/kachkaev/5gbp) 🍺
-
 PHPR (or php-r) is a library that provides ability to run R scripts from PHP. Composer package: [kachkaev/php-r](https://packagist.org/packages/kachkaev/php-r).
 
 Optionally, the library is available [as a bundle](https://github.com/kachkaev/KachkaevPHPRBundle) for Symfony2 users.
@@ -227,3 +225,5 @@ See PHPdoc annotations to classes for more details.
 License
 -------
 MIT. See [LICENSE](LICENSE).
+
+[![Donate](https://img.shields.io/badge/donate-paypal-blue.svg?style=flat-rounded)](https://paypal.me/kachkaev/5gbp)
